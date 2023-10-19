@@ -2,9 +2,11 @@ from django.shortcuts import render
 from rest_framework import generics, permissions
 from .models import Post
 from .serializers import PostSerializer, UserSerializer
-from .permissions import IsAuthorOrReadOnly, IsAdminUser # new
+from .permissions import IsAuthorOrReadOnly # new
 from django.contrib.auth import get_user_model # new
 from rest_framework import viewsets # new
+from rest_framework.permissions import IsAdminUser # new
+
 
 
 class PostViewSet(viewsets.ModelViewSet): # new
