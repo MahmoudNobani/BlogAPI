@@ -2,25 +2,16 @@ from django.shortcuts import render
 from rest_framework import generics, permissions
 from .models import Post
 from .serializers import PostSerializer, UserSerializer
-from .permissions import IsAuthorOrReadOnly # new
+from .permissions import IsAuthorOrReadOnly, IsAdminUser # new
 from django.contrib.auth import get_user_model # new
+from rest_framework import viewsets # new
 
 
-class PostList(generics.ListCreateAPIView):
+class PostViewSet(viewsets.ModelViewSet): # new
+    permission_classes = (IsAuthorOrReadOnly,)
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = (IsAuthorOrReadOnly,) # new
-
-class PostDetail(generics.RetrieveUpdateDestroyAPIView):
-    #permission_classes = (permissions.IsAdminUser,) # new
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer
-    permission_classes = (IsAuthorOrReadOnly,) # new
-
-class UserList(generics.ListCreateAPIView): # new
-    queryset = get_user_model().objects.all()
-    serializer_class = UserSerializer
-    
-class UserDetail(generics.RetrieveUpdateDestroyAPIView): # new
+class UserViewSet(viewsets.ModelViewSet): # new
+    permission_classes = [IsAdminUser] # new
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
