@@ -37,7 +37,30 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
+    "rest_framework", # new
+    "corsheaders", # new
+
+    "accounts.apps.AccountsConfig", # new
+    "posts.apps.PostsConfig",
 ]
+
+# new
+CORS_ORIGIN_WHITELIST = (
+    "http://localhost:3000",
+    "http://localhost:8000",
+)
+
+CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"] # new
+#connection to the front end port, which is typically used by react
+
+REST_FRAMEWORK = { # new
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.AllowAny",
+    ],
+}
+
+AUTH_USER_MODEL = "accounts.CustomUser" # new
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
